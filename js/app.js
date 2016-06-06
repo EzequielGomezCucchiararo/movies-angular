@@ -2,15 +2,25 @@
 var moviesDBApp = angular.module('moviesDBApp', [
     'ngRoute',
     'movieDBControllers',
-    'movieDBDirectives',
-    'movieDBServices'
+    'movieDBDirectives'
 ]);
 
-moviesDBApp.run(function($rootScope) {
-    console.log ("app has started");
-    if (localStorage.getItem('ApiKeyMovieDB') ) {
-        $rootScope.apiKey = localStorage.getItem('marvelData');
-    }
+moviesDBApp.run(function($rootScope, $location) {
+
+    // register listener to watch route changes
+    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+        var apiKey;
+        if ( $rootScope.apiKeyMovieDbApp == null ) {
+            apiKey = localStorage.getItem('apiKeyMovieDbApp');
+            if ( apiKey ) {
+                $rootScope.apiKeyMovieDbApp = apiKey;
+            }
+            else {
+                $location.path( "/settings" );
+            }
+        }
+    });
+
 });
 
 moviesDBApp.constant("myMovieConfig", {
