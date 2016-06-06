@@ -29,3 +29,5 @@
 .settings-button a:hover { color: #FFF; }
 
 .settings-form .alert { margin:10px 0; }
+.settings-form h1 { margin-bottom: 40px; }
+.settings-form p { margin:7px 0 10px; }

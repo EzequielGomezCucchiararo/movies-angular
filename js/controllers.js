@@ -44,7 +44,7 @@ function generateFunctionController( title, apiUrl ) {
 var movieDBControllers = angular.module('movieDBControllers', ['movieDBServices']);
 
 // ba09f3c8c6c830377b422df18cfa833e
-var settingsCtrl = function($scope, $rootScope, $window, MovieListService, myMovieConfig) {
+var settingsCtrl = function($scope, $rootScope, $q, $window, MovieListService, myMovieConfig) {
 
     var newApiKey = false;
 
@@ -82,6 +82,32 @@ var settingsCtrl = function($scope, $rootScope, $window, MovieListService, myMov
             $scope.newApiKey = true;
         }
 
+    }
+
+
+    $scope.localPopularMovies = function() {
+
+        var url = myMovieConfig.moviesEndpoint + '/popular?api_key='+$scope.apiKey;
+        url += "&page=<%PAGE-NUMBER%>"
+        var urlPromises = [1,2,3,4,5,6,7,8,9,10].map(getPromise);
+
+        function getPromise( pageNumber ) {
+            var myPagedUrl = url.replace("<%PAGE-NUMBER%>",pageNumber);
+            console.log(myPagedUrl);
+            return MovieListService.getList(myPagedUrl)
+        };
+
+        console.log (urlPromises);
+
+        $q.all(urlPromises)
+            .then(function(values) {
+                console.log(values);
+                //return values;
+            });
+        // MovieListService.getList(url)
+        //     .then( function(result) {
+        //         console.log(result)
+        //     })
     }
 };
 
