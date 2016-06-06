@@ -1,0 +1,14 @@
+<div class='jumbotron' ng-show='loading'><h1>Loading.....</h1></div>
+<h1>{{title}} </h1>
+<div class='row' ng-repeat="group in movieList">
+	<div class="col-md-2 portfolio-item" ng-repeat="movie in group">
+	    <a href="#">
+	        <img class="img-responsive" ng-src="http://image.tmdb.org/t/p/w370/{{movie.poster_path}}" alt="">
+	    </a>
+	    <h3>
+	        <a href="#">{{movie.title}}</a>
+	    </h3>
+	    <p>From: {{movie.release_date | date: 'mediumDate'}}</p>
+	</div>
+</div>
+
