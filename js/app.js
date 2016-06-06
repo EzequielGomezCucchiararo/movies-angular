@@ -7,6 +7,15 @@ var moviesDBApp = angular.module('moviesDBApp', [
 
 moviesDBApp.run(function($rootScope, $location) {
 
+    var localPopularMovies = localStorage.getItem('popularMoviesData');
+    $rootScope.dataMovies = [];
+
+    if ( localPopularMovies ) {
+        sData = localStorage.getItem('popularMoviesData');
+        aData = JSON.parse(sData);
+        $rootScope.dataMovies['popular'] = aData;
+    }
+
     // register listener to watch route changes
     $rootScope.$on( "$routeChangeStart", function(event, next, current) {
         var apiKey;

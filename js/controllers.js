@@ -1,7 +1,6 @@
-function groupResults (result) {
+function groupResults (movies) {
 
     var sizeGroups = 6;
-    var movies = result.data.results;
     var groupedMovies = movies.reduce( function( acc, current, index ){
         index%sizeGroups? acc[acc.length-1].push(current) : acc.push([current]);
         return acc;
@@ -16,14 +15,23 @@ function generateFunctionController( title, apiUrl ) {
 
         var apiKey = $rootScope.apiKeyMovieDbApp;
 
+        if ( $rootScope.dataMovies[apiUrl] ) {
+            var groupedMovies = groupResults( $rootScope.dataMovies[apiUrl] );
+            $scope.movieList = groupedMovies;
+            console.log ( apiUrl + " movies read from localStorage")
+            console.log ( $scope.movieList );
+            return;
+        }
+
         if ( apiKey ) {
 
+            console.log ("let's go and load some popilar movues");
             $scope.loading = true;
             $scope.title = title;
             var url = myMovieConfig.moviesEndpoint + '/' + apiUrl + '?api_key=' + apiKey;
 
             function toScope(result) {
-                var groupedMovies = groupResults(result);
+                var groupedMovies = groupResults(result.data.results);
                 $scope.movieList = groupedMovies;
                 $scope.loading = false;
             }
@@ -87,27 +95,34 @@ var settingsCtrl = function($scope, $rootScope, $q, $window, MovieListService, m
 
     $scope.localPopularMovies = function() {
 
+        $rootScope.dataMovies['popular'] = [];
+
         var url = myMovieConfig.moviesEndpoint + '/popular?api_key='+$scope.apiKey;
         url += "&page=<%PAGE-NUMBER%>"
-        var urlPromises = [1,2,3,4,5,6,7,8,9,10].map(getPromise);
-
-        function getPromise( pageNumber ) {
+        var getPromise = function( pageNumber ) {
             var myPagedUrl = url.replace("<%PAGE-NUMBER%>",pageNumber);
-            console.log(myPagedUrl);
             return MovieListService.getList(myPagedUrl)
         };
+        var urlPromises = [1,2,3,4,5,6,7,8,9,10].map(getPromise);
 
-        console.log (urlPromises);
+        $q.all( urlPromises )
+            .then( joinResults )
+            .then (function(processedValues){
+                var sData, aData;
+                var sPopularMoviesData = JSON.stringify(processedValues);
+                localStorage.setItem('popularMoviesData', sPopularMoviesData);
+                sData = localStorage.getItem('popularMoviesData');
+                aData = JSON.parse(sData);
+                $rootScope.dataMovies['popular'] = aData;
 
-        $q.all(urlPromises)
-            .then(function(values) {
-                console.log(values);
-                //return values;
+                console.log ($rootScope.dataMovies['popular']);
             });
-        // MovieListService.getList(url)
-        //     .then( function(result) {
-        //         console.log(result)
-        //     })
+
+        function joinResults ( aResults ) {
+            return aResults.reduce(function(acc, current, index){
+                return acc.concat(current.data.results);
+            },[])
+        }
     }
 };
 

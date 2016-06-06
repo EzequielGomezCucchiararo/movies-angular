@@ -56,7 +56,7 @@
 			<div class="form-group">
 				<label for="first_name" class="col-lg-3 control-label">Popular Movies:</label>
 				<div class="col-lg-8">
-							<p class="text-danger"><strong>0</strong> popular movies are stored locally</p>
+							<p ng-class="$root.dataMovies['popular'].length ? 'text-success' : 'text-danger'"><strong>{{ $root.dataMovies['popular'].length || 0 }}</strong> popular movies are stored locally</p>
 							<button ng-click="localPopularMovies()" type="button" class="btn btn-primary">Store Popular Movies Locally</button>
 
 
