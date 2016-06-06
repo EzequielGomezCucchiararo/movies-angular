@@ -14,6 +14,27 @@ function generateFunctionController( title, apiUrl ) {
     return function($scope, $rootScope, MovieListService, myMovieConfig) {
 
         var apiKey = $rootScope.apiKeyMovieDbApp;
+        $scope.title = title;
+
+        $scope.filterSearch = function() {
+            if ($scope.searchValue) {
+                var searchValue = $scope.searchValue.toLowerCase();
+                var currentData = $rootScope.dataMovies[apiUrl]
+                var filteredData = currentData.filter(function( oMovie ) {
+                    console.log (oMovie.title);
+                    console.log ($scope.searchValue);
+                    return ( oMovie.title.toLowerCase().indexOf(searchValue) != -1);
+                })
+                $rootScope.dataMovies[apiUrl] = filteredData;
+            }
+            else {
+                sData = localStorage.getItem('popularMoviesData');
+                aData = JSON.parse(sData);
+                $rootScope.dataMovies['popular'] = aData;
+            }
+            var groupedMovies = groupResults( $rootScope.dataMovies[apiUrl] );
+            $scope.movieList = groupedMovies;
+        }
 
         if ( $rootScope.dataMovies[apiUrl] ) {
             var groupedMovies = groupResults( $rootScope.dataMovies[apiUrl] );
@@ -27,7 +48,7 @@ function generateFunctionController( title, apiUrl ) {
 
             console.log ("let's go and load some popilar movues");
             $scope.loading = true;
-            $scope.title = title;
+
             var url = myMovieConfig.moviesEndpoint + '/' + apiUrl + '?api_key=' + apiKey;
 
             function toScope(result) {
@@ -45,6 +66,7 @@ function generateFunctionController( title, apiUrl ) {
        else {
             console.log ("need an API key to do things...");
        }
+
     }
 
 }
