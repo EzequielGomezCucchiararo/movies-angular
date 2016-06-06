@@ -34,3 +34,4 @@
 
 #movies-list h1 { margin:10px 0 40px; text-align: center; }
 #movies-list .filter-search { margin-bottom: 30px; }
+#movies-list .filter-search p { margin: 15px 0; }

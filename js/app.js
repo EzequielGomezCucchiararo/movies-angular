@@ -1,36 +1,10 @@
 // defining the app module of the project
 var moviesDBApp = angular.module('moviesDBApp', [
     'ngRoute',
-    'movieDBControllers',
-    'movieDBDirectives'
+    'settingsModule',
+    'searchModule',
+    'movieDBControllers'
 ]);
-
-moviesDBApp.run(function($rootScope, $location) {
-
-    var localPopularMovies = localStorage.getItem('popularMoviesData');
-    $rootScope.dataMovies = [];
-
-    if ( localPopularMovies ) {
-        sData = localStorage.getItem('popularMoviesData');
-        aData = JSON.parse(sData);
-        $rootScope.dataMovies['popular'] = aData;
-    }
-
-    // register listener to watch route changes
-    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
-        var apiKey;
-        if ( $rootScope.apiKeyMovieDbApp == null ) {
-            apiKey = localStorage.getItem('apiKeyMovieDbApp');
-            if ( apiKey ) {
-                $rootScope.apiKeyMovieDbApp = apiKey;
-            }
-            else {
-                $location.path( "/settings" );
-            }
-        }
-    });
-
-});
 
 moviesDBApp.constant("myMovieConfig", {
     "moviesEndpoint": "https://api.themoviedb.org/3/movie",
@@ -60,11 +34,8 @@ moviesDBApp.config(function($routeProvider) {
             templateUrl: "templates/movies.html",
             controller: "MovieNowPlayingController"
         })
-        .when("/settings", {
-            templateUrl: "templates/settings.html",
-            controller: "settingsController"
-        })
         .otherwise({
             redirectTo: '/popular'
         });
+
 });

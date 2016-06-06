@@ -57,11 +57,31 @@
 				<label for="first_name" class="col-lg-3 control-label">Popular Movies:</label>
 				<div class="col-lg-8">
 							<p ng-class="$root.dataMovies['popular'].length ? 'text-success' : 'text-danger'"><strong>{{ $root.dataMovies['popular'].length || 0 }}</strong> popular movies are stored locally</p>
-							<button ng-click="localPopularMovies()" type="button" class="btn btn-primary">Store Popular Movies Locally</button>
-
-
+							<button ng-click="localMovies('popular')" type="button" class="btn btn-primary">Store Popular Movies Locally</button>
 				</div>
 			</div>
+			<div class="form-group">
+				<label for="first_name" class="col-lg-3 control-label">Upcoming Movies:</label>
+				<div class="col-lg-8">
+							<p ng-class="$root.dataMovies['upcoming'].length ? 'text-success' : 'text-danger'"><strong>{{ $root.dataMovies['upcoming'].length || 0 }}</strong> upcoming movies are stored locally</p>
+							<button ng-click="localMovies('upcoming')" type="button" class="btn btn-primary">Store Upcoming Movies Locally</button>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="first_name" class="col-lg-3 control-label">Now Playing Movies:</label>
+				<div class="col-lg-8">
+							<p ng-class="$root.dataMovies['now_playing'].length ? 'text-success' : 'text-danger'"><strong>{{ $root.dataMovies['now_playing'].length || 0 }}</strong> now playing movies are stored locally</p>
+							<button ng-click="localMovies('now_playing')" type="button" class="btn btn-primary">Store Now Playing Movies Locally</button>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="first_name" class="col-lg-3 control-label">Top Rated Movies:</label>
+				<div class="col-lg-8">
+							<p ng-class="$root.dataMovies['top_rated'].length ? 'text-success' : 'text-danger'"><strong>{{ $root.dataMovies['top_rated'].length || 0 }}</strong> top rated movies are stored locally</p>
+							<button ng-click="localMovies('top_rated')" type="button" class="btn btn-primary">Store Top Rated Movies Locally</button>
+				</div>
+			</div>
+
 		</fieldset>
 	</form>
 
