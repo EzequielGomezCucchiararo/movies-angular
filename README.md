@@ -1,26 +1,29 @@
-# [Start Bootstrap](http://startbootstrap.com/) - [3 Col Portfolio](http://startbootstrap.com/template-overviews/3-col-portfolio/)
+# Movies Web (Angular)
 
-[3 Col Portfolio](http://startbootstrap.com/template-overviews/3-col-portfolio/) is a three column portfolio template for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/).
+![screenshot](img/screenshot.png)
 
-## Getting Started
+This project is a demo to show the use of angular using some of its features:
 
-To use this template, choose one of the following options to get started:
-* Download the latest release on Start Bootstrap
-* Fork this repository on GitHub
+- Controllers
+- Directives
+- Routing
+- Services
 
-## Bugs and Issues
+It also shows the use of:
+ - Some higher order functions
+ - Promises
+ - LocalStorage
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/IronSummitMedia/startbootstrap-3-col-portfolio/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/3-col-portfolio/).
+It can be seen online at: http://juanmaguitar.github.io/movies-angular
 
-## Creator
+## The API Key
 
-Start Bootstrap was created by and is maintained by **David Miller**, Managing Parter at [Iron Summit Media Strategies](http://www.ironsummitmedia.com/).
+This site uses https://www.themoviedb.org/ to retrieve the data so to use it **you have to enter (& save) a valid API Key**
 
-* https://twitter.com/davidmillerskt
-* https://github.com/davidtmiller
+![settings api key](img/settings-api-key.png)
 
-Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
+You can get one by registering in the site and adding a new API Key.
 
-## Copyright and License
+The doc of the API is at: http://docs.themoviedb.apiary.io/
 
-Copyright 2013-2015 Iron Summit Media Strategies, LLC. Code released under the [Apache 2.0](https://github.com/IronSummitMedia/startbootstrap-3-col-portfolio/blob/gh-pages/LICENSE) license.
+
