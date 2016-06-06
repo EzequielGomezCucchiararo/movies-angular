@@ -44,7 +44,7 @@ function generateFunctionController( title, apiUrl ) {
 var movieDBControllers = angular.module('movieDBControllers', ['movieDBServices']);
 
 // ba09f3c8c6c830377b422df18cfa833e
-var settingsCtrl = function($scope, $rootScope, MovieListService, myMovieConfig) {
+var settingsCtrl = function($scope, $rootScope, $window, MovieListService, myMovieConfig) {
 
     var newApiKey = false;
 
@@ -57,6 +57,10 @@ var settingsCtrl = function($scope, $rootScope, MovieListService, myMovieConfig)
     }
 
 
+    $scope.reloadPage = function(){
+        console.log("reloading....")
+        $window.location.reload();
+    }
 
     $scope.saveSettings = function() {
 

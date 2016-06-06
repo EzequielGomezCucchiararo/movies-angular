@@ -24,6 +24,8 @@
     border-color: rgb(212, 63, 58);
 }
 
-.settings { padding: 10px 0 0; }
-.settings a { font-size: 1.8em; color: #9d9d9d; }
-.settings a:hover { color: #FFF; }
+.settings-button { padding: 10px 0 0; }
+.settings-button a { font-size: 1.8em; color: #9d9d9d; }
+.settings-button a:hover { color: #FFF; }
+
+.settings-form .alert { margin:10px 0; }
