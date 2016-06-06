@@ -46,21 +46,36 @@ var movieDBControllers = angular.module('movieDBControllers', ['movieDBServices'
 // ba09f3c8c6c830377b422df18cfa833e
 var settingsCtrl = function($scope, $rootScope, MovieListService, myMovieConfig) {
 
-    $scope.apiKey = $rootScope.apiKeyMovieDbApp;
+    var newApiKey = false;
+
+    if ( $rootScope.apiKeyMovieDbApp ) {
+        $scope.apiKey = $rootScope.apiKeyMovieDbApp;
+        $scope.validateStatus = 1;
+    }
+    else {
+        $scope.validateStatus = -1;
+    }
+
+
 
     $scope.saveSettings = function() {
 
         var url = myMovieConfig.moviesEndpoint + '/popular?api_key='+$scope.apiKey;
 
+        $scope.validateStatus = 0;
+
         MovieListService.getList(url)
             .then( toLocalStorage )
             .catch( function(error) {
+                $scope.validateStatus = -1;
                 console.log('We havent stored the new API KEY because of errors', error)
             });
 
         function toLocalStorage() {
             $rootScope.apiKeyMovieDbApp = $scope.apiKey;
             localStorage.setItem('apiKeyMovieDbApp', $scope.apiKey);
+            $scope.validateStatus = 1;
+            $scope.newApiKey = true;
         }
 
     }
