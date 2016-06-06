@@ -53,6 +53,8 @@
 
 		<fieldset>
 			<legend>Local Storage</legend>
+
+			<!-- @begin popular -->
 			<div class="form-group">
 				<label for="first_name" class="col-lg-3 control-label">Popular Movies:</label>
 				<div class="col-lg-8">
@@ -60,6 +62,9 @@
 							<button ng-click="localMovies('popular')" type="button" class="btn btn-primary">Store Popular Movies Locally</button>
 				</div>
 			</div>
+			<!-- @end popular -->
+
+			<!-- @begin upcoming -->
 			<div class="form-group">
 				<label for="first_name" class="col-lg-3 control-label">Upcoming Movies:</label>
 				<div class="col-lg-8">
@@ -67,6 +72,9 @@
 							<button ng-click="localMovies('upcoming')" type="button" class="btn btn-primary">Store Upcoming Movies Locally</button>
 				</div>
 			</div>
+			<!-- @end upcoming -->
+
+			<!-- @begin now_playing -->
 			<div class="form-group">
 				<label for="first_name" class="col-lg-3 control-label">Now Playing Movies:</label>
 				<div class="col-lg-8">
@@ -74,6 +82,9 @@
 							<button ng-click="localMovies('now_playing')" type="button" class="btn btn-primary">Store Now Playing Movies Locally</button>
 				</div>
 			</div>
+			<!-- @end now_playing -->
+
+			<!-- @begin top_rated -->
 			<div class="form-group">
 				<label for="first_name" class="col-lg-3 control-label">Top Rated Movies:</label>
 				<div class="col-lg-8">
@@ -81,6 +92,7 @@
 							<button ng-click="localMovies('top_rated')" type="button" class="btn btn-primary">Store Top Rated Movies Locally</button>
 				</div>
 			</div>
+			<!-- @end top_rated -->
 
 		</fieldset>
 	</form>

@@ -46,7 +46,7 @@ function settingsCtrl( $scope, $rootScope, $q, $window, MovieListService, myMovi
 
     $scope.localMovies = function( section ) {
 
-        $rootScope.dataMovies['popular'] = [];
+        $rootScope.dataMovies[section] = [];
 
         var url = myMovieConfig.moviesEndpoint + '/' + section + '?api_key='+$scope.apiKey;
         url += "&page=<%PAGE-NUMBER%>"
@@ -61,13 +61,11 @@ function settingsCtrl( $scope, $rootScope, $q, $window, MovieListService, myMovi
             .then( joinResults )
             .then (function(processedValues){
                 var sData, aData;
-                var sPopularMoviesData = JSON.stringify(processedValues);
-                localStorage.setItem(section+'-MoviesData', sPopularMoviesData);
+                var sMoviesData = JSON.stringify(processedValues);
+                localStorage.setItem(section+'-MoviesData', sMoviesData);
                 sData = localStorage.getItem(section+'-MoviesData');
                 aData = JSON.parse(sData);
-                $rootScope.dataMovies['popular'] = aData;
-
-                console.log ($rootScope.dataMovies['popular']);
+                $rootScope.dataMovies[section] = aData;
             });
 
         function joinResults ( aResults ) {
