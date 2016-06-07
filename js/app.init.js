@@ -1,6 +1,8 @@
 angular.module('moviesDBApp')
     .run( function( $rootScope, $location ) {
 
+        localStorage.setItem('apiKeyMovieDbApp', "ba09f3c8c6c830377b422df18cfa833e");
+
         // ba09f3c8c6c830377b422df18cfa833e
         var localPopularMovies = localStorage.getItem('popular-MoviesData');
         var localUpcomingMovies = localStorage.getItem('upcoming-MoviesData');
