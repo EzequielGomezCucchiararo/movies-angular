@@ -1,1 +1,1 @@
-angular.module('settingsModule', []);
+angular.module('settingsModule', ['movieDBServices']);

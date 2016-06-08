@@ -6,7 +6,7 @@ var moviesDBApp = angular.module('moviesDBApp', [
     'movieDBControllers'
 ]);
 
-moviesDBApp.constant("myMovieConfig", {
+moviesDBApp.constant("appConfig", {
     "moviesEndpoint": "https://api.themoviedb.org/3/movie",
     "apiKey": "ba09f3c8c6c830377b422df18cfa833e"
 })

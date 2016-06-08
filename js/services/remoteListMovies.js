@@ -1,26 +1,4 @@
-angular.module('movieDBServices', [])
-    .service('getApi', function(appConfig, $rootScope) {
-
-    })
-    .service('listMovies', function($q, appConfig, $rootScope, remoteListMovies) {
-
-        this.getList = function (section) {
-
-            var localData = getLocalStorage(section);
-            var url = appConfig.moviesEndpoint + '/' + section + '?api_key=' + $rootScope.apiKey;
-
-            if (localData) {
-            	return $q(function(resolve, reject) {
-            		resolve(localData);
-				})
-            } else {
-                return remoteListMovies.getList(url)
-					.then( filterResults )
-                	.then( saveLocalStorage.bind(null, section) )
-            }
-        }
-
-    })
+angular.module('movieDBServices')
     .factory('remoteListMovies', function($http) {
         //
         return {
@@ -33,7 +11,7 @@ angular.module('movieDBServices', [])
     })
     .factory('remoteBigListMovies', function($q, $rootScope, $http, appConfig) {
 
- 		return {
+ 				return {
         	getList : getBigList
         }
 
@@ -64,18 +42,3 @@ angular.module('movieDBServices', [])
         };
 
     });
-
-function filterResults(oData) {
-    return oData.data.results;
-}
-
-function saveLocalStorage(section, data) {
-    var sMoviesData = JSON.stringify(data);
-    localStorage.setItem(section + '-MoviesData', sMoviesData);
-    return data;
-}
-
-function getLocalStorage(section) {
-    var sMoviesData = localStorage.getItem(section + '-MoviesData');
-    return JSON.parse(sMoviesData);
-}

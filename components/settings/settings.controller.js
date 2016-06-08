@@ -2,78 +2,22 @@ angular
   .module('settingsModule')
   .controller('SettingsController', settingsCtrl );
 
-function settingsCtrl( $scope, $rootScope, $q, $window, MovieListService, myMovieConfig ) {
-
-    var newApiKey = false;
-
-    if ( $rootScope.apiKeyMovieDbApp ) {
-        $scope.apiKey = $rootScope.apiKeyMovieDbApp;
-        $scope.validateStatus = 1;
-    }
-    else {
-        $scope.validateStatus = -1;
-    }
-
-
-    $scope.reloadPage = function(){
-        console.log("reloading....")
-        $window.location.reload();
-    }
-
-    $scope.saveSettings = function() {
-
-        // just a url to check the connection w/ the API Key
-        var url = myMovieConfig.moviesEndpoint + '/popular?api_key='+$scope.apiKey;
-
-        $scope.validateStatus = 0;
-
-        MovieListService.getList(url)
-            .then( toLocalStorage )
-            .catch( function(error) {
-                $scope.validateStatus = -1;
-                console.log('We havent stored the new API KEY because of errors', error)
-            });
-
-        function toLocalStorage() {
-            $rootScope.apiKeyMovieDbApp = $scope.apiKey;
-            localStorage.setItem('apiKeyMovieDbApp', $scope.apiKey);
-            $scope.validateStatus = 1;
-            $scope.newApiKey = true;
-        }
-
-    }
-
+function settingsCtrl( $scope, $rootScope, $q, remoteBigListMovies) {
 
     $scope.localMovies = function( section ) {
+        console.log (section);
+        remoteBigListMovies.getList( section )
+            .then( saveLocalStorage.bind(null, section)  )
+            .then( toRootScope.bind(null, section) )
+    }
 
-        $rootScope.dataMovies[section] = [];
-
-        var url = myMovieConfig.moviesEndpoint + '/' + section + '?api_key='+$scope.apiKey;
-        url += "&page=<%PAGE-NUMBER%>"
-
-        var getPromise = function( pageNumber ) {
-            var myPagedUrl = url.replace("<%PAGE-NUMBER%>",pageNumber);
-            return MovieListService.getList(myPagedUrl)
-        };
-        var urlPromises = [1,2,3,4,5,6,7,8,9,10].map(getPromise);
-
-        $q.all( urlPromises )
-            .then( joinResults )
-            .then (function(processedValues){
-                var sData, aData;
-                var sMoviesData = JSON.stringify(processedValues);
-                localStorage.setItem(section+'-MoviesData', sMoviesData);
-                sData = localStorage.getItem(section+'-MoviesData');
-                aData = JSON.parse(sData);
-                $rootScope.dataMovies[section] = aData;
-            });
-
-        function joinResults ( aResults ) {
-            return aResults.reduce(function(acc, current, index){
-                return acc.concat(current.data.results);
-            },[])
-        }
+    function toRootScope(section, data) {
+        $rootScope.dataMovies[section] = data;
     }
 };
 
-
+function saveLocalStorage (section, data) {
+    var sMoviesData = JSON.stringify(data);
+    localStorage.setItem(section+'-MoviesData', sMoviesData);
+    return data;
+}
